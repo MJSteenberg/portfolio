@@ -1,4 +1,4 @@
-import React from 'react'
+import type { ReactElement } from 'react'
 
 type Role = {
   company: string
@@ -69,7 +69,7 @@ const roles: Role[] = [
   }
 ]
 
-export function ExperienceTimeline(): JSX.Element {
+export function ExperienceTimeline(): ReactElement {
   return (
     <div className="relative">
       <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-linear-to-b from-white/0 via-white/20 to-white/0" />
