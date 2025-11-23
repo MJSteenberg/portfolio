@@ -1,15 +1,15 @@
 import React from 'react'
 import { Hero } from './components/Hero.tsx'
-import { SceneSection } from './components/SceneSection.tsx'
-// Font controls removed per request
+import { SiteHeader } from './components/SiteHeader.tsx'
 
 export function Portfolio(): React.ReactElement {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Hero />
-      <SceneSection />
-
-      <footer className="mt-auto py-12 text-center ink-subtle text-sm">
+    <div className="flex min-h-screen flex-col bg-[#f7f8fc]">
+      <SiteHeader />
+      <main className="flex-1">
+        <Hero />
+      </main>
+      <footer className="pt-6 pb-10 text-center ink-subtle text-sm">
         © {new Date().getFullYear()} MJ Steenberg — Cape Town, South Africa
       </footer>
     </div>

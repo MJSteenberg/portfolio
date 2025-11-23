@@ -1,54 +1,150 @@
 import React from 'react'
-import { CALENDLY_LINK, CONTACT_EMAIL } from '../constants.ts'
+import { CALENDLY_LINK, CORE_HEADLINE, CORE_PARAGRAPHS, PRIMARY_CTA_LABEL, SECONDARY_CTA_LABEL } from '../constants.ts'
+import sceneImage from '../../assets/scene.webp'
+import shopifyIcon from '../../assets/partners/shopify-icon.svg'
+import wooIcon from '../../assets/partners/woocommerce.png'
+import gtmIcon from '../../assets/partners/google-tag-manager-svgrepo-com.svg'
+import ga4Icon from '../../assets/partners/google_analytics-icon.svg'
+
+const PARTNER_BADGES = [
+  { key: 'shopify', label: 'Shopify', icon: shopifyIcon, bg: 'bg-white/15' },
+  { key: 'woocommerce', label: 'WooCommerce', icon: wooIcon, bg: 'bg-white/15' },
+  { key: 'gtm', label: 'Google Tag Manager', icon: gtmIcon, bg: 'bg-white/15' },
+  { key: 'ga4', label: 'GA4', icon: ga4Icon, bg: 'bg-white/15' }
+]
 
 export function Hero(): React.ReactElement {
+  const [submitted, setSubmitted] = React.useState(false)
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const payload = Object.fromEntries(formData.entries())
+    console.log('Contact request', payload)
+    form.reset()
+    setSubmitted(true)
+    window.setTimeout(() => setSubmitted(false), 5000)
+  }
+
   return (
-    <header className="hero-image relative overflow-hidden text-white">
-      <div className="absolute inset-0 bg-linear-to-b from-black/85 via-black/65 to-black/40" />
+    <header id="hero" className="relative isolate overflow-hidden pt-20 pb-10 md:pt-20 md:pb-16">
+      <div className="container relative mx-auto px-4 sm:px-6 md:px-10">
+        <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] border border-white/15 text-white shadow-2xl">
+          <img
+            src={sceneImage}
+            alt="Mountain valley scene"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-b md:bg-linear-to-r from-black/85 via-black/70 to-black/35" />
 
-      <div className="relative container mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-24 flex flex-col gap-10 lg:flex-row lg:items-end">
-        <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-white/70">
-            Shopify & Google Tracking
+          <div className="relative z-10 grid items-start gap-10 sm:gap-12 lg:gap-16 lg:grid-cols-[1.05fr_0.95fr] p-6 sm:p-10 lg:p-14">
+            <div className="space-y-6 max-w-2xl text-balance">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl leading-tight text-white">
+                {CORE_HEADLINE}
+              </h1>
+
+              <div className="space-y-3 text-base sm:text-lg text-white/85 leading-relaxed">
+                {CORE_PARAGRAPHS.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+                <a className="btn-inverse w-full justify-center sm:w-auto" href="#contact-form">
+                  {PRIMARY_CTA_LABEL}
+                </a>
+                <a className="btn-inverse w-full justify-center sm:w-auto" href={CALENDLY_LINK} target="_blank" rel="noreferrer">
+                  {SECONDARY_CTA_LABEL}
+                </a>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="rounded-[32px] border border-white/20 bg-white/10 p-4 sm:p-6 text-white shadow-2xl backdrop-blur space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-3 text-sm sm:text-base">
+                  <span className="font-semibold tracking-wide text-white/90">Over 200 happy clients</span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200/40 bg-emerald-200/20 px-3 py-1 text-xs sm:text-sm font-semibold text-white">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
+                      <path d="M12 2.5l2.7 6.05 6.55.52-5 4.33 1.5 6.37L12 16.9l-5.75 2.87 1.5-6.37-5-4.33 6.55-.52z" />
+                    </svg>
+                    4.8 / 5 on Trustpilot
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {PARTNER_BADGES.map((partner) => (
+                    <span
+                      key={partner.key}
+                      className={`inline-flex items-center gap-2 rounded-full ${partner.bg} px-3 py-1 text-white/90 backdrop-blur`}
+                      aria-label={partner.label}
+                    >
+                      <img src={partner.icon} alt={partner.label} className="h-5 w-auto" />
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[32px] border border-white/20 bg-white/10 p-6 sm:p-8 text-white shadow-2xl backdrop-blur">
+                <form
+                  id="contact-form"
+                  onSubmit={handleSubmit}
+                  className="space-y-4"
+                >
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="text-sm font-semibold text-white/80" htmlFor="hero-name">Name</label>
+                      <input
+                        id="hero-name"
+                        name="name"
+                        required
+                        placeholder="MJ Steenberg"
+                        className="mt-1 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-base text-white placeholder-white/60 outline-none focus:border-white focus:ring-2 focus:ring-white/40"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-semibold text-white/80" htmlFor="hero-email">Email</label>
+                      <input
+                        id="hero-email"
+                        name="email"
+                        type="email"
+                        required
+                        placeholder="you@company.com"
+                        className="mt-1 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-base text-white placeholder-white/60 outline-none focus:border-white focus:ring-2 focus:ring-white/40"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="text-sm font-semibold text-white/80" htmlFor="hero-company">Company / Store</label>
+                      <input
+                        id="hero-company"
+                        name="company"
+                        placeholder="Unome Packaging"
+                        className="mt-1 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-base text-white placeholder-white/60 outline-none focus:border-white focus:ring-2 focus:ring-white/40"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="text-sm font-semibold text-white/80" htmlFor="hero-need">What do you need help with?</label>
+                      <textarea
+                        id="hero-need"
+                        name="need"
+                        rows={4}
+                        placeholder="Meta can't see COD orders, GA4 revenue is off by 30%, TikTok doesn’t receive server events…"
+                        className="mt-1 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-base text-white placeholder-white/60 outline-none focus:border-white focus:ring-2 focus:ring-white/40"
+                      />
+                    </div>
+                  </div>
+
+                  <button className="btn-inverse w-full justify-center" type="submit">
+                    {PRIMARY_CTA_LABEL}
+                  </button>
+                  {submitted && (
+                    <p className="text-sm text-emerald-200">
+                      Got it! I&apos;ll reply within one business day.
+                    </p>
+                  )}
+                </form>
+              </div>
+            </div>
           </div>
-
-          <h1 className="text-5xl md:text-7xl leading-[1.05] tracking-tight">
-            <span>Hi, I&apos;m MJ.</span><br />
-            <span>Need help fixing your Shopify or Google tracking?</span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-white/85 max-w-2xl">
-            Most stores are missing real purchase data inside Google, Meta, and GA4.
-            I help brands fix that — so their ads optimise on real revenue, not guesses.
-          </p>
-
-          <p className="text-lg text-white/75 max-w-2xl">
-            I focus on making your ad platforms see the same revenue you see inside your store,
-            using browser and server-side tracking for Shopify and WooCommerce.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <a className="btn-inverse" href={CALENDLY_LINK} target="_blank" rel="noreferrer">Book a discovery call</a>
-            <a className="btn-inverse bg-white/5 hover:bg-white/15" href={`mailto:${CONTACT_EMAIL}`}>Prefer email?</a>
-          </div>
-        </div>
-
-        <div className="rounded-3xl border border-white/15 bg-white/10 px-6 py-5 text-white/80 backdrop-blur max-w-sm">
-          <p className="text-sm uppercase tracking-[0.25em] text-white/60">What clients ask</p>
-          <ul className="mt-4 space-y-3 text-base">
-            <li className="flex gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-emerald-300" />
-              &ldquo;Why can&apos;t Meta see the same revenue that Shopify does?&rdquo;
-            </li>
-            <li className="flex gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-emerald-300" />
-              &ldquo;How do we trust GA4 when subscriptions or COD orders disappear?&rdquo;
-            </li>
-            <li className="flex gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-emerald-300" />
-              &ldquo;Can we ship server-side tracking without breaking Klaviyo or Pixels?&rdquo;
-            </li>
-          </ul>
         </div>
       </div>
     </header>
