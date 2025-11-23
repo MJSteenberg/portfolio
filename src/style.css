@@ -52,7 +52,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: url('/images/scene.webp') center/cover no-repeat;
+  background: url('./assets/scene.webp') center/cover no-repeat;
 }
 .hero-image::after {
   /* top vignette + bottom gradient fade */

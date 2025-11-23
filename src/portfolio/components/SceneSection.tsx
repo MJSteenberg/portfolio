@@ -1,5 +1,6 @@
 import React from 'react'
 import { CALENDLY_LINK, CONTACT_EMAIL } from '../constants.ts'
+import sceneImage from '../../assets/scene.webp'
 
 export function SceneSection(): React.ReactElement {
   const [submitted, setSubmitted] = React.useState(false)
@@ -20,7 +21,7 @@ export function SceneSection(): React.ReactElement {
       <div className="container mx-auto px-6 md:px-10">
         <div className="relative overflow-hidden rounded-[32px] bg-ink text-white shadow-2xl">
           <img
-            src="/images/scene.webp"
+            src={sceneImage}
             alt="Mountain valley scene"
             className="absolute inset-0 h-full w-full object-cover"
           />
