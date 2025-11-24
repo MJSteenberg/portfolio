@@ -1,5 +1,8 @@
 export const CALENDLY_LINK = 'https://calendly.com/mjsteenberg/intro-call'
 export const CONTACT_EMAIL = 'mjsteenberg@gmail.com'
+// export const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
+// src/portfolio/constants.ts
+export const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyvvfOFPF---FJwToi0PhQTmtITrc_NtO0RYZQZGYsCP06jsXw25VjkDLyGbqv_rFrWag/exec'
 
 export const CORE_HEADLINE = "You can't scale ads when your purchase attribution is broken."
 

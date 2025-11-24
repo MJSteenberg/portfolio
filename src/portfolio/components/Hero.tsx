@@ -1,5 +1,5 @@
 import React from 'react'
-import { CALENDLY_LINK, CORE_HEADLINE, CORE_PARAGRAPHS, PRIMARY_CTA_LABEL, SECONDARY_CTA_LABEL } from '../constants.ts'
+import { CALENDLY_LINK, CORE_HEADLINE, CORE_PARAGRAPHS, PRIMARY_CTA_LABEL, SECONDARY_CTA_LABEL, GOOGLE_SHEETS_WEB_APP_URL } from '../constants.ts'
 import sceneImage from '../../assets/scene.webp'
 import shopifyIcon from '../../assets/partners/shopify-icon.svg'
 import wooIcon from '../../assets/partners/woocommerce.png'
@@ -15,16 +15,46 @@ const PARTNER_BADGES = [
 
 export function Hero(): React.ReactElement {
   const [submitted, setSubmitted] = React.useState(false)
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [submitError, setSubmitError] = React.useState<string | null>(null)
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const form = event.currentTarget
     const formData = new FormData(form)
     const payload = Object.fromEntries(formData.entries())
-    console.log('Contact request', payload)
-    form.reset()
-    setSubmitted(true)
-    window.setTimeout(() => setSubmitted(false), 5000)
+
+    try {
+      setIsSubmitting(true)
+      setSubmitError(null)
+
+      if (!GOOGLE_SHEETS_WEB_APP_URL || GOOGLE_SHEETS_WEB_APP_URL.includes('YOUR_DEPLOYMENT_ID')) {
+        throw new Error('Google Sheets endpoint not configured')
+      }
+
+      const response = await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...payload,
+          submittedAt: new Date().toISOString(),
+          source: 'portfolio-site'
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error(`Sheets webhook returned ${response.status}`)
+      }
+
+      form.reset()
+      setSubmitted(true)
+      window.setTimeout(() => setSubmitted(false), 5000)
+    } catch (error) {
+      console.error('Failed to send lead to Sheets', error)
+      setSubmitError('Something went wrong. Please try again or email mjsteenberg@gmail.com.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -133,14 +163,19 @@ export function Hero(): React.ReactElement {
                     </div>
                   </div>
 
-                  <button className="btn-inverse w-full justify-center" type="submit">
-                    {PRIMARY_CTA_LABEL}
+                <button className="btn-inverse w-full justify-center disabled:opacity-70 disabled:cursor-not-allowed" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending…' : PRIMARY_CTA_LABEL}
                   </button>
                   {submitted && (
                     <p className="text-sm text-emerald-200">
                       Got it! I&apos;ll reply within one business day.
                     </p>
                   )}
+                {submitError && (
+                  <p className="text-sm text-red-200">
+                    {submitError}
+                  </p>
+                )}
                 </form>
               </div>
             </div>
