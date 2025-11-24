@@ -28,17 +28,17 @@ export function Hero(): React.ReactElement {
   }
 
   return (
-    <header id="hero" className="relative isolate overflow-hidden pt-20 pb-10 md:pt-20 md:pb-16">
+    <header id="hero" className="relative isolate overflow-hidden pt-16 pb-8 md:pt-20 md:pb-10">
       <div className="container relative mx-auto px-4 sm:px-6 md:px-10">
-        <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] border border-white/15 text-white shadow-2xl">
+        <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] border border-white/15 text-white">
           <img
             src={sceneImage}
             alt="Mountain valley scene"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="pointer-events-none absolute inset-0 bg-linear-to-b md:bg-linear-to-r from-black/85 via-black/70 to-black/35" />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/65 via-black/40 to-black/15 md:bg-linear-to-r" />
 
-          <div className="relative z-10 grid items-start gap-10 sm:gap-12 lg:gap-16 lg:grid-cols-[1.05fr_0.95fr] p-6 sm:p-10 lg:p-14">
+          <div className="relative z-10 grid items-start gap-8 sm:gap-10 lg:gap-16 lg:grid-cols-[1.05fr_0.95fr] p-5 sm:p-8 lg:p-14">
             <div className="space-y-6 max-w-2xl text-balance">
               <h1 className="text-4xl sm:text-5xl md:text-6xl leading-tight text-white">
                 {CORE_HEADLINE}
