@@ -76,3 +76,64 @@ body {
 .after-hero {
   padding-top: clamp(1rem, 5vw, 3rem);
 }
+
+.carousel-mask {
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-mask::before,
+.carousel-mask::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(247,247,247,0.95), rgba(247,247,247,0));
+  opacity: 0.08;
+  mix-blend-mode: screen;
+}
+
+.carousel-mask::after {
+  transform: rotate(180deg);
+}
+
+.touch-pan-x {
+  touch-action: pan-x;
+}
+
+.simple-trust-signal {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.simple-trust-signal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: trustGlow 2.8s ease-in-out infinite;
+}
+
+.simple-trust-signal:hover::after {
+  opacity: 0.6;
+}
+
+@keyframes trustGlow {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.95);
+  }
+}

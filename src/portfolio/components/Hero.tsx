@@ -1,17 +1,23 @@
 import React from 'react'
 import { CALENDLY_LINK, CORE_HEADLINE, CORE_PARAGRAPHS, PRIMARY_CTA_LABEL, SECONDARY_CTA_LABEL, GOOGLE_SHEETS_WEB_APP_URL } from '../constants.ts'
 import sceneImage from '../../assets/scene.webp'
-import shopifyIcon from '../../assets/partners/shopify-icon.svg'
-import wooIcon from '../../assets/partners/woocommerce.png'
-import gtmIcon from '../../assets/partners/google-tag-manager-svgrepo-com.svg'
-import ga4Icon from '../../assets/partners/google_analytics-icon.svg'
 
-const PARTNER_BADGES = [
-  { key: 'shopify', label: 'Shopify', icon: shopifyIcon, bg: 'bg-white/15' },
-  { key: 'woocommerce', label: 'WooCommerce', icon: wooIcon, bg: 'bg-white/15' },
-  { key: 'gtm', label: 'Google Tag Manager', icon: gtmIcon, bg: 'bg-white/15' },
-  { key: 'ga4', label: 'GA4', icon: ga4Icon, bg: 'bg-white/15' }
-]
+const TESTIMONIALS_PAGE_URL = `${import.meta.env.BASE_URL}happy-customers`
+
+const SimpleReviewCTA = (): React.ReactElement => (
+  <a
+    href={TESTIMONIALS_PAGE_URL}
+    className="simple-trust-signal relative inline-flex items-center gap-3 rounded-full border border-white/30 bg-black/80 px-6 py-3 text-sm font-semibold tracking-[0.4em] text-white transition hover:border-emerald-200/80"
+  >
+    <span className="flex items-center gap-1">
+      <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current text-amber-400">
+        <path d="M12 2.5l2.7 6.05 6.55.52-5 4.33 1.5 6.37L12 16.9l-5.75 2.87 1.5-6.37-5-4.33 6.55-.52z" />
+      </svg>
+      <span className="text-base font-semibold">4.9/5</span>
+    </span>
+    <span className="tracking-[0.4em] text-[0.65rem] text-white/70">from 1366 reviews</span>
+  </a>
+)
 
 export function Hero(): React.ReactElement {
   const [submitted, setSubmitted] = React.useState(false)
@@ -91,27 +97,8 @@ export function Hero(): React.ReactElement {
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-[32px] border border-white/20 bg-white/10 p-4 sm:p-6 text-white shadow-2xl backdrop-blur space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-3 text-sm sm:text-base">
-                  <span className="font-semibold tracking-wide text-white/90">Over 200 happy clients</span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200/40 bg-emerald-200/20 px-3 py-1 text-xs sm:text-sm font-semibold text-white">
-                    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
-                      <path d="M12 2.5l2.7 6.05 6.55.52-5 4.33 1.5 6.37L12 16.9l-5.75 2.87 1.5-6.37-5-4.33 6.55-.52z" />
-                    </svg>
-                    4.8 / 5 on Trustpilot
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  {PARTNER_BADGES.map((partner) => (
-                    <span
-                      key={partner.key}
-                      className={`inline-flex items-center gap-2 rounded-full ${partner.bg} px-3 py-1 text-white/90 backdrop-blur`}
-                      aria-label={partner.label}
-                    >
-                      <img src={partner.icon} alt={partner.label} className="h-5 w-auto" />
-                    </span>
-                  ))}
-                </div>
+              <div className="flex justify-center">
+                <SimpleReviewCTA />
               </div>
 
               <div className="rounded-[32px] border border-white/20 bg-white/10 p-6 sm:p-8 text-white shadow-2xl backdrop-blur">

@@ -1,8 +1,8 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './style.css'
-import { Portfolio } from './portfolio/Portfolio'
 import { ensureRecoletaPreload } from './font'
+import { HappyCustomersPage } from './happy-customers/HappyCustomersPage'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {
@@ -13,8 +13,7 @@ ensureRecoletaPreload()
 
 createRoot(rootElement).render(
   <React.StrictMode>
-    <Portfolio />
+    <HappyCustomersPage />
   </React.StrictMode>
 )
-
 

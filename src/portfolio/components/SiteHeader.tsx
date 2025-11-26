@@ -1,7 +1,12 @@
 import React from 'react'
 import { CALENDLY_LINK, PRIMARY_CTA_LABEL, SECONDARY_CTA_LABEL } from '../constants.ts'
 
-export function SiteHeader(): React.ReactElement {
+type Props = {
+  whiteBar?: boolean
+  homeHref?: string
+}
+
+export function SiteHeader({ whiteBar = false, homeHref = '#hero' }: Props): React.ReactElement {
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
@@ -45,9 +50,11 @@ export function SiteHeader(): React.ReactElement {
 
   const navClasses = [
     'pointer-events-auto relative flex w-full flex-wrap items-center gap-3 text-sm font-medium transition-all duration-300',
-    isScrolled
-      ? 'rounded-full border border-black/10 bg-white/90 px-4 sm:px-6 md:px-8 py-3 shadow-2xl backdrop-blur-lg'
-      : 'rounded-2xl border border-transparent px-3 md:px-4 py-2'
+    whiteBar
+      ? 'rounded-full border border-black/10 bg-white/95 px-4 sm:px-6 md:px-8 py-3 shadow-2xl text-ink backdrop-blur-lg'
+      : isScrolled
+        ? 'rounded-full border border-black/10 bg-white/90 px-4 sm:px-6 md:px-8 py-3 shadow-2xl backdrop-blur-lg'
+        : 'rounded-2xl border border-transparent px-3 md:px-4 py-2'
   ].join(' ')
 
   return (
@@ -55,7 +62,7 @@ export function SiteHeader(): React.ReactElement {
       <div className="container pointer-events-none px-4 sm:px-6 md:px-10">
         <nav className={navClasses}>
         <div className="flex w-full flex-1 items-center justify-between gap-2 sm:w-auto sm:justify-start">
-          <a href="#hero" className="text-lg sm:text-xl font-semibold text-ink hover:text-emerald-600 transition-colors">
+          <a href={homeHref} className="text-lg sm:text-xl font-semibold text-ink hover:text-emerald-600 transition-colors">
             Hi, I&apos;m MJ
           </a>
           <div className="hidden md:flex items-center gap-2 text-ink-subtle">
